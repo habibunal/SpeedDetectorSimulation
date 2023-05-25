@@ -7,11 +7,11 @@ static void MX_GPIO_Init(void);
 
 int main(void)
 {
-	HAL_Init();
-	SystemClock_Config();
-	MX_GPIO_Init();
+    HAL_Init();
+    SystemClock_Config();
+    MX_GPIO_Init();
 
-	lcd_init();
+    lcd_init();
 
     float t1 = 0, t2 = 0, t = 0, v = 0;
     char vel[20];
@@ -19,29 +19,29 @@ int main(void)
 
     while (1)
     {
-    	if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0)) { t1 = HAL_GetTick(); }
-	  	if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)) { t2 = HAL_GetTick(); }
+        if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0)) { t1 = HAL_GetTick(); }
+	if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_1)) { t2 = HAL_GetTick(); }
 
-	  	t = t2 - t1;
-	  	t = t / 1000 / 3600;
-	  	v = 0.02 / t;
+	t = t2 - t1;
+	t = t / 1000 / 3600;
+	v = 0.02 / t;
 
-	  	if(v < 0)
-	  	{
-	  		v = v * (-1);
-	  		sprintf(dir, "Direction: Left");
-	  	}
-	  	else
-	  	{
-	  		sprintf(dir, "Direction: Right");
-	  	}
-	  	sprintf(vel, "Velocity: %.0f km/h", v);
+	if(v < 0)
+	{
+	    v = v * (-1);
+	    sprintf(dir, "Direction: Left");
+	}
+	else
+	{
+	    sprintf(dir, "Direction: Right");
+	}
+	sprintf(vel, "Velocity: %.0f km/h", v);
 
-	  	if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_2))
-	  	{
-	  		lcd_puts(0, 0, (int8_t*) vel);
-	  		lcd_puts(2, 0, (int8_t*) dir);
-	  	}
+	if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_2))
+	{
+	    lcd_puts(0, 0, (int8_t*) vel);
+	    lcd_puts(2, 0, (int8_t*) dir);
+	}
     }
 }
 
